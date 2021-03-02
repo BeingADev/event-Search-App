@@ -6,7 +6,11 @@ const Form = ({ setEvent, result, setResult, data }) => {
 		e.preventDefault();
 
 		const { Data } = data;
-		setEvent(Data.find((obj) => obj.title === result));
+		let obj = Data.find((obj) => obj.title === result);
+
+		typeof obj !== "undefined"
+			? setEvent(obj)
+			: setEvent("Your query doesn't match!");
 	};
 
 	const handleChange = (e) => {
