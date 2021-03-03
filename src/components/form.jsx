@@ -1,16 +1,44 @@
 import Input from "./input";
 import Button from "./button";
 
-const Form = ({ setEvent, result, setResult, data }) => {
+const Form = ({ setEvent, result, setResult }) => {
+	const getTimeZone = /((1[0-2]|0?[1-9]):([0-5][0-9])?([AaPp][Mm]))|((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))|((1[0-2]|0?[1-9])( ?[AaPp][Mm]))|((1[0-2]|0?[1-9])[ ]([AaPp][.][Mm]))/g;
+	const getDate = /(\d{1})[/](\d{2})[/](\d{4})/g;
+	const regExMentions = /(@)(?!\.)(?!\S*\.\.)(?!\S*\.[\s|$])([a-zA-Z0-9,\.]+?)(?=\s|$)/g;
+	const removeChar = /([,])|(at)|([-])|(with)|(from)|(Today)|(Tomorrow)|(and)/g;
+
+	const getDateTime = (string) => {
+		let time = string.match(getTimeZone);
+		let date = string.match(getDate);
+
+		let newDate = date !== null ? date : new Date();
+
+		let text = string.replace(getTimeZone, "");
+		let textString = text.replace(getDate, "");
+		let message = textString.replaceAll(regExMentions, "");
+		let newMessage = message.replaceAll(removeChar, "");
+
+		let people = textString.match(regExMentions);
+
+		let obj = {
+			time: time !== null ? `${newDate} ${time}` : null,
+			body: newMessage,
+			mentions: people,
+		};
+
+		console.log(time !== null ? `${newDate} ${time}` : null);
+
+		time !== null
+			? setEvent(obj)
+			: setEvent(
+					"Datetime required for an event something like: 2/12/2021 8am | 8 AM with subject of the event "
+			  );
+	};
+
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		const { Data } = data;
-		let obj = Data.find((obj) => obj.title === result);
-
-		typeof obj !== "undefined"
-			? setEvent(obj)
-			: setEvent("Your query doesn't match!");
+		getDateTime(result);
 	};
 
 	const handleChange = (e) => {

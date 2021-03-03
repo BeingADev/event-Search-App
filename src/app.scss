@@ -82,7 +82,7 @@ body {
 		font-size: 13px;
 		color: #9f9f9f;
 		display: block;
-		text-align: right;
+		padding: 0 0 10px;
 	}
 	p {
 		margin: 0 0 15px;
@@ -103,11 +103,11 @@ ul {
 }
 
 .errorPage {
-	max-width: 768px;
+	max-width: 868px;
 	margin: 0 auto;
 	border-radius: 20px;
 	padding: 90px 20px;
-	font-size: 40px;
+	font-size: 20px;
 	line-height: 1;
 	color: darken($white, 50%);
 	text-align: center;
