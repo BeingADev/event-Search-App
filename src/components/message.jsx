@@ -3,8 +3,8 @@ import getNextTime from "../components/getNextDay";
 
 const CardUi = ({ item }) => {
 	const { time, body, mentions } = item;
-	const timestamp = date.toLocaleTimeString([], { hour12: false });
 	let date = new Date();
+	const timestamp = date.toLocaleTimeString([], { hour12: false });
 	let newTime = moment.tz(time, "MMM Do YYYY hA", "America/Toronto");
 
 	let nextDayTime = newTime.format("HH:mm");
